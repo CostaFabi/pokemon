@@ -1,20 +1,19 @@
-from pokedex import pokemon_names_eng
+import requests
+import json
+
+pokedex = json.loads(requests.get("https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/pokedex.json").text)
 
 def number(day, month, name):
     result = ((day * month) * len(name))
 
     n = int(result)
 
-
-    while n > 809:
+    while n > len(pokedex):
         n //= 2
-
-        if n <= 809:
-            break
 
     return(n)
 
-poke_number = number(1, 7, 'myrian')  #Insert(day, month, 'name')
-your_pokemon = pokemon_names_eng[poke_number - 1]
+poke_number = number(26, 7, 'fabio')  #Insert(day, month, 'name')
+your_pokemon = pokedex[poke_number - 1]['name']['english']
 
 print('#', poke_number, your_pokemon)
